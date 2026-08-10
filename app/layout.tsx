@@ -14,12 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Repo Explainer — AI-powered GitHub repository analysis",
+  title: "ATLAS — AI-powered GitHub repository analysis",
   description:
     "Paste any public GitHub repository URL and get an AI-generated architecture diagram, code explanations, and onboarding guide in minutes.",
-  keywords: ["github", "repository", "code analysis", "architecture", "AI", "Gemini", "developer tool"],
+  keywords: ["github", "repository", "code analysis", "architecture", "AI", "Gemini", "developer tool", "atlas"],
   openGraph: {
-    title: "Repo Explainer",
+    title: "ATLAS",
     description: "AI-powered GitHub repository analysis — architecture diagrams, code explanations, onboarding guides.",
     type: "website",
   },

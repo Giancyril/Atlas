@@ -88,18 +88,13 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* ── Header ── */}
-      <header className="border-b border-[var(--surface-border)] px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[var(--accent-primary)] flex items-center justify-center">
-              <Zap size={16} className="text-white" />
-            </div>
-            <span className="font-semibold text-[var(--content-primary)] tracking-tight">
-              Repo Explainer
-            </span>
-          </div>
+      <header className="border-b border-[var(--surface-border)] px-6 md:px-8 py-4">
+        <div className="w-full flex items-center justify-between">
+          <span className="font-bold text-[var(--content-primary)] tracking-widest uppercase text-base">
+            ATLAS
+          </span>
           <a
-            href="https://github.com"
+            href="https://github.com/Giancyril/Atlas"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-sm text-[var(--content-secondary)] hover:text-[var(--content-primary)] transition-base"
@@ -220,11 +215,10 @@ export default function HomePage() {
                   key={tab}
                   id={`tab-${tab}`}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2.5 text-sm font-medium transition-base border-b-2 -mb-px capitalize ${
-                    activeTab === tab
-                      ? "border-[var(--accent-primary)] text-[var(--accent-primary)]"
-                      : "border-transparent text-[var(--content-secondary)] hover:text-[var(--content-primary)]"
-                  }`}
+                  className={`px-4 py-2.5 text-sm font-medium transition-base border-b-2 -mb-px capitalize ${activeTab === tab
+                    ? "border-[var(--accent-primary)] text-[var(--accent-primary)]"
+                    : "border-transparent text-[var(--content-secondary)] hover:text-[var(--content-primary)]"
+                    }`}
                 >
                   {tab === "diagram" ? "🗺 Architecture" : tab === "code" ? "📂 Code Explorer" : "🚀 Onboarding"}
                 </button>
@@ -259,7 +253,6 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {FEATURE_CARDS.map((f) => (
                 <div key={f.title} className="card p-6">
-                  <div className="text-2xl mb-3">{f.icon}</div>
                   <h3 className="font-semibold text-[var(--content-primary)] mb-1">{f.title}</h3>
                   <p className="text-sm text-[var(--content-secondary)] leading-relaxed">{f.desc}</p>
                 </div>
@@ -271,7 +264,7 @@ export default function HomePage() {
 
       {/* ── Footer ── */}
       <footer className="border-t border-[var(--surface-border)] px-6 py-5 text-center text-xs text-[var(--content-muted)]">
-        <p>Repo Explainer — Powered by Google Gemini &amp; GitHub API</p>
+        <p>ATLAS — Powered by Google Gemini &amp; GitHub API</p>
       </footer>
     </div>
   );
@@ -279,17 +272,14 @@ export default function HomePage() {
 
 const FEATURE_CARDS = [
   {
-    icon: "🗺",
     title: "Architecture Diagram",
     desc: "Auto-generated Mermaid.js diagrams showing how modules, layers, and services connect — interactive, zoomable, exportable.",
   },
   {
-    icon: "📂",
     title: "Code Explorer",
     desc: "Navigate the codebase as a structured tree. Each folder and key file gets a purpose-driven summary with a direct GitHub link.",
   },
   {
-    icon: "🚀",
     title: "Onboarding Guide",
     desc: "Step-by-step setup instructions extracted from package.json, Dockerfiles, and Makefiles — plus a curated reading order for new contributors.",
   },
