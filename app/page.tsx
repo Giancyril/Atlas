@@ -110,10 +110,6 @@ export default function HomePage() {
         {/* Hero / Input Section */}
         <section className="px-6 py-16 text-center">
           <div className="max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 badge badge-accent mb-6">
-              <Zap size={11} />
-              Powered by Google Gemini
-            </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[var(--content-primary)] mb-4 leading-tight">
               Understand any GitHub repo
               <br />
@@ -121,7 +117,7 @@ export default function HomePage() {
             </h1>
             <p className="text-[var(--content-secondary)] text-lg mb-10 max-w-xl mx-auto leading-relaxed">
               Paste a public GitHub repository URL and get an AI-generated architecture diagram,
-              structured code explanations, and an onboarding guide — instantly.
+              structured code explanations, and an onboarding guide instantly.
             </p>
 
             {/* URL Input */}
@@ -254,7 +250,7 @@ export default function HomePage() {
               {FEATURE_CARDS.map((f) => (
                 <div key={f.title} className="card p-6">
                   <h3 className="font-semibold text-[var(--content-primary)] mb-1">{f.title}</h3>
-                  <p className="text-sm text-[var(--content-secondary)] leading-relaxed">{f.desc}</p>
+                  <p className="text-sm text-[var(--content-secondary)] leading-relaxed text-justify">{f.desc}</p>
                 </div>
               ))}
             </div>
@@ -281,7 +277,7 @@ const FEATURE_CARDS = [
   },
   {
     title: "Onboarding Guide",
-    desc: "Step-by-step setup instructions extracted from package.json, Dockerfiles, and Makefiles — plus a curated reading order for new contributors.",
+    desc: "Step-by-step setup instructions extracted from package.json, Dockerfiles, and Makefiles plus a curated reading order for new contributors.",
   },
 ];
 
