@@ -161,6 +161,12 @@ code, pre, kbd, samp {
   outline-offset: 2px;
 }
 
+input:focus,
+input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 /* ── Transitions ───────────────────────────────────────────────────────── */
 .transition-base {
   transition: all 200ms ease;
