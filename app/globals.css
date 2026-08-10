@@ -1,26 +1,213 @@
 @import "tailwindcss";
 
+/* ── Design System Tokens ──────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surface palette (dark-mode first) */
+  --surface-base: #090d16;
+  --surface-card: #0f1623;
+  --surface-elevated: #141d2e;
+  --surface-border: #1e2a3e;
+  --surface-hover: #1a2438;
+
+  /* Content palette */
+  --content-primary: #e8edf5;
+  --content-secondary: #8a9bb5;
+  --content-muted: #4a5a72;
+  --content-inverse: #090d16;
+
+  /* Brand accent */
+  --accent-primary: #4f8ef7;
+  --accent-primary-hover: #6ba3f9;
+  --accent-secondary: #a78bfa;
+  --accent-glow: rgba(79, 142, 247, 0.15);
+
+  /* Status colors */
+  --status-success: #34d399;
+  --status-warning: #fbbf24;
+  --status-error: #f87171;
+  --status-info: #60a5fa;
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), "JetBrains Mono", "Fira Code", monospace;
+
+  /* Spacing scale (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.5), 0 4px 24px rgba(0,0,0,0.3);
+  --shadow-glow: 0 0 24px rgba(79, 142, 247, 0.12);
 }
 
+/* ── Theme Wiring ──────────────────────────────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface-base: var(--surface-base);
+  --color-surface-card: var(--surface-card);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-border: var(--surface-border);
+  --color-surface-hover: var(--surface-hover);
+  --color-content-primary: var(--content-primary);
+  --color-content-secondary: var(--content-secondary);
+  --color-content-muted: var(--content-muted);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-status-success: var(--status-success);
+  --color-status-warning: var(--status-warning);
+  --color-status-error: var(--status-error);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base Resets ───────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--surface-base);
+  color: var(--content-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Typography ────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--content-primary);
+}
+
+code, pre, kbd, samp {
+  font-family: var(--font-mono);
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-card);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--content-muted);
+}
+
+/* ── Utility Classes ───────────────────────────────────────────────────── */
+.card {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.card-elevated {
+  background: var(--surface-elevated);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--surface-border);
+  background: var(--surface-elevated);
+  color: var(--content-secondary);
+  font-family: var(--font-mono);
+}
+
+.badge-accent {
+  background: var(--accent-glow);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* ── Focus Styles ──────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* ── Transitions ───────────────────────────────────────────────────────── */
+.transition-base {
+  transition: all 200ms ease;
+}
+.transition-reveal {
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+/* ── Mermaid Overrides ─────────────────────────────────────────────────── */
+.mermaid-container svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Code blocks ───────────────────────────────────────────────────────── */
+.code-block {
+  background: var(--surface-base);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  color: var(--content-secondary);
+}
+
+/* ── Loading animation ─────────────────────────────────────────────────── */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 2s ease-in-out infinite;
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-in {
+  animation: slide-in 280ms ease forwards;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
