@@ -269,15 +269,15 @@ export default function HomePage() {
 const FEATURE_CARDS = [
   {
     title: "Architecture Diagram",
-    desc: "Auto-generated Mermaid.js diagrams showing how modules, layers, and services connect — interactive, zoomable, exportable.",
+    desc: "Instantly generate interactive Mermaid.js diagrams illustrating high-level system architecture, module boundaries, component relationships, and data flows directly from your repository's key source code and configuration files.",
   },
   {
     title: "Code Explorer",
-    desc: "Navigate the codebase as a structured tree. Each folder and key file gets a purpose-driven summary with a direct GitHub link.",
+    desc: "Explore your repository through a structured, navigable directory tree. Each module, directory, and core file receives a purpose-driven architectural explanation complete with direct deep-links to your source files on GitHub.",
   },
   {
     title: "Onboarding Guide",
-    desc: "Step-by-step setup instructions extracted from package.json, Dockerfiles, and Makefiles plus a curated reading order for new contributors.",
+    desc: "Accelerate developer onboarding with automated setup instructions parsed directly from package manifests, Dockerfiles, and Makefiles, along with a curated reading path and suggested areas for first contributions.",
   },
 ];
 
