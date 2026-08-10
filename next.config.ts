@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Allow server-side imports for pg (Postgres driver)
+  serverExternalPackages: ["pg"],
 };
 
 export default nextConfig;
