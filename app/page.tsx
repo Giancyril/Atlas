@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Github, Zap, ArrowRight, Star, GitBranch, Loader2, AlertCircle } from "lucide-react";
+import { Github, ArrowRight, Star, GitBranch, Loader2, AlertCircle, Share2 } from "lucide-react";
 import { AnalysisResult, AnalyzeErrorResponse, AnalysisStage } from "@/types";
 import DiagramViewer from "@/components/diagram-viewer";
 import CodeExplainer from "@/components/code-explainer";
@@ -12,7 +12,7 @@ import ShareExportModal from "@/components/share-export-modal";
 import CodebaseChat from "@/components/codebase-chat";
 import DependencyGraph from "@/components/dependency-graph";
 import HealthScorecard from "@/components/health-scorecard";
-import { Share2 } from "lucide-react";
+import RecentAnalyses from "@/components/recent-analyses";
 
 const SAMPLE_REPOS = [
   { label: "expressjs/express", url: "https://github.com/expressjs/express" },
@@ -294,16 +294,24 @@ export default function HomePage() {
 
         {/* ── Empty State / Features ── */}
         {stage === "idle" && (
-          <section className="max-w-5xl mx-auto px-6 pb-20">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {FEATURE_CARDS.map((f) => (
-                <div key={f.title} className="card p-6">
-                  <h3 className="font-semibold text-[var(--content-primary)] mb-1">{f.title}</h3>
-                  <p className="text-sm text-[var(--content-secondary)] leading-relaxed text-justify">{f.desc}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+          <>
+            <section className="max-w-5xl mx-auto px-6 pb-10">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {FEATURE_CARDS.map((f) => (
+                  <div key={f.title} className="card p-6">
+                    <h3 className="font-semibold text-[var(--content-primary)] mb-1">{f.title}</h3>
+                    <p className="text-sm text-[var(--content-secondary)] leading-relaxed text-justify">{f.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+            <RecentAnalyses
+              onSelect={(url) => {
+                setRepoUrl(url);
+                handleAnalyze(url);
+              }}
+            />
+          </>
         )}
       </main>
 
