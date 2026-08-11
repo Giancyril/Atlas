@@ -140,6 +140,12 @@ export async function POST(request: NextRequest) {
     const { diagram } = sanitizeMermaid(analysisData.mermaidDiagram);
     analysisData.mermaidDiagram = diagram;
 
+    // --- 9b. Extract dependency summary & health scorecard ---
+    const { parseDependencies } = await import("@/lib/github/dependency-parser");
+    const { generateFallbackHealthScorecard } = await import("@/lib/gemini/health-evaluator");
+    analysisData.dependencySummary = parseDependencies(files);
+    analysisData.healthScorecard = generateFallbackHealthScorecard();
+
     // --- 10. Persist to Postgres ---
     const upsertResult = await query<{ id: string; created_at: string }>(
       `INSERT INTO repo_analyses (
