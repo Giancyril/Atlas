@@ -13,6 +13,7 @@ import CodebaseChat from "@/components/codebase-chat";
 import DependencyGraph from "@/components/dependency-graph";
 import HealthScorecard from "@/components/health-scorecard";
 import RecentAnalyses from "@/components/recent-analyses";
+import VersionDiffViewer from "@/components/version-diff-viewer";
 
 const SAMPLE_REPOS = [
   { label: "expressjs/express", url: "https://github.com/expressjs/express" },
@@ -37,7 +38,7 @@ export default function HomePage() {
   const [stage, setStage] = useState<AnalysisStage>("idle");
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<AnalyzeErrorResponse | null>(null);
-  const [activeTab, setActiveTab] = useState<"diagram" | "code" | "onboarding" | "health" | "deps" | "chat">("diagram");
+  const [activeTab, setActiveTab] = useState<"diagram" | "code" | "onboarding" | "health" | "deps" | "chat" | "diff">("diagram");
   const [showExportModal, setShowExportModal] = useState(false);
 
   const isLoading = stage !== "idle" && stage !== "done" && stage !== "error";
@@ -231,6 +232,7 @@ export default function HomePage() {
                   { id: "health", label: "🛡 Health Score" },
                   { id: "deps", label: "📦 Dependencies" },
                   { id: "chat", label: "💬 Ask AI" },
+                  { id: "diff", label: "⚡ Version Diff" },
                 ] as const
               ).map((tab) => (
                 <button
@@ -277,6 +279,12 @@ export default function HomePage() {
                   analysisData={result.data}
                   repoFullName={result.repoFullName}
                   commitSha={result.commitSha}
+                />
+              )}
+              {activeTab === "diff" && (
+                <VersionDiffViewer
+                  repoUrl={result.repoUrl}
+                  defaultBranch={result.branchRef || "main"}
                 />
               )}
             </div>
