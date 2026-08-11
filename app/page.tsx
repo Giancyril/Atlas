@@ -8,6 +8,11 @@ import CodeExplainer from "@/components/code-explainer";
 import OnboardingGuide from "@/components/onboarding-guide";
 import StageLoader from "@/components/stage-loader";
 import MetadataBadgeBar from "@/components/metadata-badge-bar";
+import ShareExportModal from "@/components/share-export-modal";
+import CodebaseChat from "@/components/codebase-chat";
+import DependencyGraph from "@/components/dependency-graph";
+import HealthScorecard from "@/components/health-scorecard";
+import { Share2 } from "lucide-react";
 
 const SAMPLE_REPOS = [
   { label: "expressjs/express", url: "https://github.com/expressjs/express" },
@@ -32,7 +37,8 @@ export default function HomePage() {
   const [stage, setStage] = useState<AnalysisStage>("idle");
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<AnalyzeErrorResponse | null>(null);
-  const [activeTab, setActiveTab] = useState<"diagram" | "code" | "onboarding">("diagram");
+  const [activeTab, setActiveTab] = useState<"diagram" | "code" | "onboarding" | "health" | "deps" | "chat">("diagram");
+  const [showExportModal, setShowExportModal] = useState(false);
 
   const isLoading = stage !== "idle" && stage !== "done" && stage !== "error";
 
@@ -201,22 +207,43 @@ export default function HomePage() {
         {/* ── Results ── */}
         {stage === "done" && result && (
           <div className="max-w-7xl mx-auto px-6 pb-16 animate-slide-in">
-            {/* Repo metadata bar */}
-            <MetadataBadgeBar result={result} />
+            {/* Repo metadata bar + Export button */}
+            <div className="flex items-center gap-4 flex-wrap mb-2">
+              <div className="flex-1 min-w-0">
+                <MetadataBadgeBar result={result} />
+              </div>
+              <button
+                onClick={() => setShowExportModal(true)}
+                className="flex items-center gap-1.5 px-4 py-2 bg-[var(--surface-elevated)] hover:bg-[var(--surface-hover)] border border-[var(--surface-border)] rounded-[var(--radius-md)] text-sm text-[var(--content-secondary)] hover:text-[var(--content-primary)] transition-base font-medium shrink-0"
+              >
+                <Share2 size={15} />
+                Share & Export
+              </button>
+            </div>
 
             {/* Tab navigation */}
-            <div className="flex gap-1 mb-6 border-b border-[var(--surface-border)]">
-              {(["diagram", "code", "onboarding"] as const).map((tab) => (
+            <div className="flex gap-0 mb-6 border-b border-[var(--surface-border)] overflow-x-auto">
+              {(
+                [
+                  { id: "diagram", label: "🗺 Architecture" },
+                  { id: "code", label: "📂 Code Explorer" },
+                  { id: "onboarding", label: "🚀 Onboarding" },
+                  { id: "health", label: "🛡 Health Score" },
+                  { id: "deps", label: "📦 Dependencies" },
+                  { id: "chat", label: "💬 Ask AI" },
+                ] as const
+              ).map((tab) => (
                 <button
-                  key={tab}
-                  id={`tab-${tab}`}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2.5 text-sm font-medium transition-base border-b-2 -mb-px capitalize ${activeTab === tab
-                    ? "border-[var(--accent-primary)] text-[var(--accent-primary)]"
-                    : "border-transparent text-[var(--content-secondary)] hover:text-[var(--content-primary)]"
-                    }`}
+                  key={tab.id}
+                  id={`tab-${tab.id}`}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-4 py-2.5 text-sm font-medium transition-base border-b-2 -mb-px whitespace-nowrap ${
+                    activeTab === tab.id
+                      ? "border-[var(--accent-primary)] text-[var(--accent-primary)]"
+                      : "border-transparent text-[var(--content-secondary)] hover:text-[var(--content-primary)]"
+                  }`}
                 >
-                  {tab === "diagram" ? "🗺 Architecture" : tab === "code" ? "📂 Code Explorer" : "🚀 Onboarding"}
+                  {tab.label}
                 </button>
               ))}
             </div>
@@ -239,9 +266,31 @@ export default function HomePage() {
               {activeTab === "onboarding" && (
                 <OnboardingGuide guide={result.data.onboardingGuide} />
               )}
+              {activeTab === "health" && (
+                <HealthScorecard scorecard={result.data.healthScorecard} />
+              )}
+              {activeTab === "deps" && (
+                <DependencyGraph summary={result.data.dependencySummary} />
+              )}
+              {activeTab === "chat" && (
+                <CodebaseChat
+                  analysisData={result.data}
+                  repoFullName={result.repoFullName}
+                  commitSha={result.commitSha}
+                />
+              )}
             </div>
+
+            {/* Share/Export Modal */}
+            {showExportModal && (
+              <ShareExportModal
+                result={result}
+                onClose={() => setShowExportModal(false)}
+              />
+            )}
           </div>
         )}
+
 
         {/* ── Empty State / Features ── */}
         {stage === "idle" && (
