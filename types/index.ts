@@ -75,6 +75,8 @@ export interface AnalysisData {
   mermaidDiagram: string;
   codeExplanations: CodeExplanations;
   onboardingGuide: OnboardingGuide;
+  healthScorecard?: HealthScorecard;
+  dependencySummary?: DependencySummary;
 }
 
 export interface AnalysisResult {
@@ -83,6 +85,7 @@ export interface AnalysisResult {
   repoUrl: string;
   repoFullName: string;
   commitSha: string;
+  branchRef?: string;
   primaryLanguage: string | null;
   starsCount: number;
   filesAnalyzedCount: number;
@@ -93,6 +96,7 @@ export interface AnalysisResult {
 export interface AnalyzeRequest {
   repoUrl: string;
   forceReanalyze?: boolean;
+  ref?: string; // branch or tag
 }
 
 export interface AnalyzeErrorResponse {
@@ -122,3 +126,60 @@ export interface AnalysisProgress {
   message: string;
   percentage: number;
 }
+
+// ── Advanced Feature 1: Interactive Codebase Chat ──────────────────────────
+export interface ChatMessage {
+  id: string;
+  sender: "user" | "assistant";
+  text: string;
+  timestamp: string;
+  citations?: string[];
+}
+
+export interface ChatRequest {
+  repoFullName: string;
+  commitSha: string;
+  analysisData: AnalysisData;
+  messages: { sender: "user" | "assistant"; text: string }[];
+  question: string;
+}
+
+export interface ChatResponse {
+  answer: string;
+  citations: string[];
+  suggestedFollowups: string[];
+}
+
+// ── Advanced Feature 2: Health & Security Scorecard ──────────────────────
+export interface HealthMetric {
+  category: "Modularity" | "Documentation" | "Maintainability" | "Security & Quality";
+  score: number; // 0-100
+  grade: "A+" | "A" | "B" | "C" | "D" | "F";
+  summary: string;
+  recommendation: string;
+}
+
+export interface HealthScorecard {
+  overallGrade: "A+" | "A" | "B" | "C" | "D" | "F";
+  overallScore: number;
+  metrics: HealthMetric[];
+  highlights: string[];
+  riskFactors: string[];
+}
+
+// ── Advanced Feature 3: Dependency Graph ─────────────────────────────────
+export interface DependencyItem {
+  name: string;
+  version: string;
+  type: "direct" | "dev" | "peer";
+  category?: string;
+}
+
+export interface DependencySummary {
+  manifestFile: string;
+  ecosystem: "npm" | "pip" | "cargo" | "go" | "unknown";
+  directCount: number;
+  devCount: number;
+  dependencies: DependencyItem[];
+}
+
