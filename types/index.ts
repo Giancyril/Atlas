@@ -183,3 +183,29 @@ export interface DependencySummary {
   dependencies: DependencyItem[];
 }
 
+// ── Advanced Feature 6: Architecture Evolution & Version Diff ───────────
+export interface ModifiedModuleDiff {
+  name: string;
+  impact: "high" | "medium" | "low";
+  description: string;
+}
+
+export interface VersionDiffSummary {
+  baseRef: string;
+  compareRef: string;
+  totalFilesChanged: number;
+  evolutionSummary: string;
+  addedModules: string[];
+  removedModules: string[];
+  modifiedModules: ModifiedModuleDiff[];
+  breakingChanges: string[];
+  migrationGuide: string[];
+}
+
+export interface VersionDiffRequest {
+  repoUrl: string;
+  baseRef: string;
+  compareRef: string;
+}
+
+
